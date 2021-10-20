@@ -21,6 +21,30 @@ double gaussIntegrall1D(int amountOfPoints)
     return value;
 }
 
+double gaussIntegrall1D(int amountOfPoints, double(*f)(double))
+{
+    double* points = nodePoints(amountOfPoints);
+    double* weight = nodeWeight(amountOfPoints);
+
+    double value = 0;
+
+    for (int i = 0; i < amountOfPoints; i++)
+    {
+        value += weight[i] * f(points[i]);
+    }
+
+    delete[] points;
+    delete[] weight;
+
+    return value;
+}
+
+double polinomial_fx(double x)
+{
+    // 5x^2 + 3x + 6
+    return (5 * x * x + 3 * x + 6);
+}
+
 double gaussIntegrall2D(int amountOfPoints)
 {
     double* points = nodePoints(amountOfPoints);
@@ -40,6 +64,33 @@ double gaussIntegrall2D(int amountOfPoints)
     delete[] weight;
 
     return value;
+}
+
+double gaussIntegrall2D(int amountOfPoints, double(*f)(double x, double y))
+{
+    double* points = nodePoints(amountOfPoints);
+    double* weight = nodeWeight(amountOfPoints);
+
+    double value = 0;
+
+    for (int i = 0; i < amountOfPoints; i++)
+    {
+        for (int j = 0; j < amountOfPoints; j++)
+        {
+            value += weight[i] * weight[j] * f(points[i], points[j]);
+        }
+    }
+
+    delete[] points;
+    delete[] weight;
+
+    return value;
+}
+
+double polinomial_fxy(double x, double y)
+{
+    // 5x^2y^2 + 3xy + 6
+    return (5 * x * x * y * y + 3 * x * y + 6);
 }
 
 double* nodeWeight(int nodes)

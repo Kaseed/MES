@@ -16,9 +16,23 @@ int main()
 	//grid.show_nodes();
 	//grid.show_elements();
 
+	cout << gaussIntegrall1D(2) << endl;
+
+	cout << gaussIntegrall1D(2, polinomial_fx) << endl;
+
+	cout << gaussIntegrall1D(3) << endl;
+
+	cout << gaussIntegrall1D(3, polinomial_fx) << endl;
+
+
+
 	cout << gaussIntegrall2D(2) << endl;
 
 	cout << gaussIntegrall2D(3) << endl;
+
+	cout << gaussIntegrall2D(2, polinomial_fxy) << endl;
+
+	cout << gaussIntegrall2D(3, polinomial_fxy) << endl;
 
 	return 0;
 }
