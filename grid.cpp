@@ -89,5 +89,3 @@ void Grid::show_elements()
 		std::cout << elements[i].ID[3] << std::endl;
 	}
 }
-
-
