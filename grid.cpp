@@ -2,7 +2,7 @@
 #include "grid.h"
 
 
-Grid::Grid(float h, float w, int nH, int nW)
+Grid::Grid(double h, double w, int nH, int nW)
 	:height(h), width(w), nHeight(nH), nWidth(nW)
 {
 	nNodes = nHeight * nWidth;
@@ -45,6 +45,23 @@ Grid::Grid(float h, float w, int nH, int nW)
 		int id4 = id1 + 1;
 
 		elements[i] = { id1, id2, id3, id4 };
+	}
+}
+
+Grid::Grid(Grid& grid)
+	:height(grid.height), width(grid.width), nHeight(grid.nHeight), nWidth(grid.nWidth), nNodes(grid.nNodes), nElements(grid.nElements)
+{
+	nodes = new Node[nNodes];
+	elements = new Element[nElements];
+
+	for (int i = 0; i < nNodes; i++)
+	{
+		nodes[i] = grid.nodes[i];
+	}
+
+	for (int i = 0; i < nElements; i++)
+	{
+		elements[i] = grid.elements[i];
 	}
 }
 

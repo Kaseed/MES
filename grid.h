@@ -3,8 +3,8 @@
 
 class Grid
 {
-	float height;
-	float width;
+	double height;
+	double width;
 
 	int nHeight;
 	int nWidth;
@@ -16,7 +16,9 @@ class Grid
 	Element* elements;//[nElements];
 
 public:
-	Grid(float height, float width, int nH, int nW);
+	Grid(double height, double width, int nH, int nW);
+
+	Grid(Grid & grid);
 
 	~Grid();
 
