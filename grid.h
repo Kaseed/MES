@@ -16,6 +16,7 @@ class Grid
 	Element* elements;//[nElements];
 
 public:
+
 	Grid(double height, double width, int nH, int nW);
 
 	Grid(Grid & grid);
@@ -25,4 +26,12 @@ public:
 	void show_nodes();
 
 	void show_elements();
+
+	int get_amount_nodes();
+
+	int get_amount_elements();
+
+	Node get_node(int number);
+
+	Element get_element(int number);
 };

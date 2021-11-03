@@ -89,3 +89,23 @@ void Grid::show_elements()
 		std::cout << elements[i].ID[3] << std::endl;
 	}
 }
+
+int Grid::get_amount_nodes()
+{
+	return nNodes;
+}
+
+int Grid::get_amount_elements()
+{
+	return nElements;
+}
+
+Node Grid::get_node(int number)
+{
+	return nodes[number];
+}
+
+Element Grid::get_element(int number)
+{
+	return elements[number];
+}
