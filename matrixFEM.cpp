@@ -301,13 +301,13 @@ double* aggregation_P(Grid& grid)
 		}
 	}
 
-	std::cout << "\n\n\n";
+	//std::cout << "\n\n\n";
 
-	for (int i = 0; i < grid.get_amount_nodes(); i++)
-	{
-		std::cout << aggregation_matrix[i] << " ";
-	}
-	std::cout << "\n";
+	//for (int i = 0; i < grid.get_amount_nodes(); i++)
+	//{
+	//	std::cout << aggregation_matrix[i] << " ";
+	//}
+	//std::cout << "\n";
 
 	return aggregation_matrix;
 

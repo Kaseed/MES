@@ -73,4 +73,13 @@ void test_grid_H_matrix(Grid grid)
 	}
 }
 
+void test_grid_P_matrix(Grid grid, double* P_matrix)
+{
+	for (int i = 0; i < grid.get_amount_nodes(); i++)
+	{
+		std::cout << P_matrix[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
 

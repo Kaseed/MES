@@ -11,3 +11,5 @@ void test_grid_nodes(Grid grid);
 void test_grid_element(Grid grid);
 
 void test_grid_H_matrix(Grid grid);
+
+void test_grid_P_matrix(Grid grid, double* P_matrix);

@@ -40,7 +40,11 @@ int main() {
 
 	aggregation_H(grid1);
 
-	aggregation_P(grid1);
+	double* P = aggregation_P(grid1);
+
+	test_grid_P_matrix(grid1, P);
+
+	delete[] P;
 
 	return 0;
 }
