@@ -8,6 +8,7 @@ public:
 	double H[4][4];
 	double Hbc[4][4];
 	double P[4];
+	double C[4][4];
 
 
 	Element();
@@ -30,9 +31,11 @@ public:
 	int get_id_parameter(int number);
 
 	void show_H_matrix();
+	void show_C_matrix();
 
 	void set_Hbc_matrix(double H1[4][4]);
+	void set_C_matrix(double C[4][4]);
 
-	//friend class Grid;
+	void add_boundary_condition();
 };
 

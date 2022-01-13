@@ -112,10 +112,20 @@ int Grid::get_n_width()
 	return nWidth;
 }
 
+double** Grid::get_H_matrix()
+{
+	return nullptr;
+}
+
 void Grid::get_H_matrix(int number)
 {
 	//return elements[number].get_H_matrix();
 	elements[number].show_H_matrix();
+}
+
+void Grid::get_C_matrix(int number)
+{
+	elements[number].show_C_matrix();
 }
 
 double Grid::get_H_matrix_at(int element, int row, int column)
@@ -126,6 +136,11 @@ double Grid::get_H_matrix_at(int element, int row, int column)
 double Grid::get_P_matrix_at(int element, int row)
 {
 	return elements[element].P[row];
+}
+
+double Grid::get_C_matrix_at(int element, int row, int column)
+{
+	return elements[element].C[row][column];
 }
 
 Node Grid::get_node(int number)
@@ -156,4 +171,17 @@ void Grid::add_boundary_Condition(int element, double Hbc[4][4], double P[4])
 			this->elements[element].Hbc[k][l] += Hbc[k][l];
 		}
 	}
+}
+
+void Grid::sum_boundary_Condition()
+{
+	for (int i = 0; i < nElements; i++)
+	{
+		this->elements[i].add_boundary_condition();
+	}
+}
+
+void Grid::save_C_matrix(double H[4][4], int element)
+{
+	this->elements[element].set_C_matrix(H);
 }

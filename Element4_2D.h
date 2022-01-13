@@ -10,6 +10,8 @@ public:
 	double sideEast[2][4];
 	double sideSouth[2][4];
 
+	double N[4][4];
+
 	Element4_2D(int amountOfNodes);
 
 	Element4_2D(Element4_2D& element);

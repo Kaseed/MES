@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 #ifndef LAB_NO_H
 #define LAB_NO_H
@@ -45,11 +45,11 @@ void jakobian(int i, int j, double I[2][2], double Iinv[2][2], Element4_2D eleme
 
 void solve_H_matrix(Grid& grid, Element4_2D element)
 {
-	// WspÛ≥czynnik przewodzenia
+	// Wsp√≥≈Çczynnik przewodzenia
 	double countivity = 25.0;
 
 
-	//Przechodzenie po kaødym elemencie
+	//Przechodzenie po ka≈ºdym elemencie
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		double H[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
@@ -57,7 +57,7 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 		std::cout << "Element " << i + 1 << std::endl;
 #endif
 
-		//Przechodzenie po kaødym wierzcho≥ku
+		//Przechodzenie po ka≈ºdym wierzcho≈Çku
 		for (int j = 0; j < 4; j++)
 		{
 #if DEBUG==1
@@ -81,7 +81,7 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 			double dNdx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
 			double dNdy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
 
-			//Liczenie macierzy powierzchni po punktach ca≥kowania
+			//Liczenie macierzy powierzchni po punktach ca≈Çkowania
 			for (int l = 0; l < 4; l++)
 				for (int m = 0; m < 4; m++)
 				{
@@ -136,9 +136,9 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 {
 	//TO DO
-	//ZmieniÊ detJ z oblicznia z d≥ugoúci na obliczanie ze wspÛ≥rzÍdnych punktÛw
-	//ZamieniÊ 300 na alfa
-	//ZamieniÊ 1200 na temperature
+	//Zmieniƒá detJ z oblicznia z d≈Çugo≈õci na obliczanie ze wsp√≥≈Çrzƒôdnych punkt√≥w
+	//Zamieniƒá 300 na alfa
+	//Zamieniƒá 1200 na temperature
 
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
@@ -153,10 +153,11 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
-					P[k] = 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
+					//std::cout << "det\n" << det;
+					P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
 					for (int l = 0; l < 4; l++)
 					{
-						//std::cout << "\t----------------" << det;
+
 						Hbc[k][l] =300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
 					}
 				}
@@ -177,7 +178,7 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
-					P[k] = 300 * (uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.sideWest[1][k] * 1200) * det;
+					P[k] += 300 * (uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.sideWest[1][k] * 1200) * det;
 					for (int l = 0; l < 4; l++)
 					{
 						Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l]) * det;
@@ -204,7 +205,7 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
-					P[k] = 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
+					P[k] += 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
 					for (int l = 0; l < 4; l++)
 					{
 						Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l]) * det;
@@ -228,7 +229,7 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
-					P[k] = 300 * (uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.sideNorth[1][k] * 1200) * det;
+					P[k] += 300 * (uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.sideNorth[1][k] * 1200) * det;
 					for (int l = 0; l < 4; l++)
 					{
 						Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l]) * det;
@@ -248,6 +249,35 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 	}
 }
 
+void solve_C_matrix(Grid& grid, Element4_2D element)
+{
+	double c = 700.0, ro = 7800.0;
+	for (int i = 0; i < grid.get_amount_elements(); i++)
+	{
+		double C[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+		for (int j = 0; j < 4; j++)
+		{
+			double I[2][2] = { {0,0},{0,0} };
+			double Iinv[2][2] = { {0,0},{0,0} };
+
+			jakobian(i, j, I, Iinv, element, grid);
+			double detI = I[0][0] * I[1][1] - I[1][0] * I[0][1];
+
+			for (int k = 0; k < 4; k++)
+			{
+				for (int m = 0; m < 4; m++)
+				{
+					double data = c * ro * (element.N[j][k] * element.N[j][m]) * detI;
+					C[k][m] += data;
+				}
+			}
+
+		}
+		grid.save_C_matrix(C, i);
+
+	}
+}
+
 double** aggregation_H(Grid& grid)
 {
 	//return nullptr;
@@ -261,7 +291,7 @@ double** aggregation_H(Grid& grid)
 		}
 	}
 
-	//Przejscie po kaødym elemencie
+	//Przejscie po ka≈ºdym elemencie
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		for(int l = 0 ; l < 4; l++)
@@ -292,7 +322,7 @@ double* aggregation_P(Grid& grid)
 		aggregation_matrix[j] = 0.0;
 	}
 
-	//Przejscie po kaødym elemencie
+	//Przejscie po ka≈ºdym elemencie
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		for (int l = 0; l < 4; l++)
@@ -311,4 +341,367 @@ double* aggregation_P(Grid& grid)
 
 	return aggregation_matrix;
 
+}
+
+double** aggregation_C(Grid& grid)
+{
+	double** aggregation_matrix = new double* [grid.get_amount_nodes()];
+	for (int i = 0; i < grid.get_amount_nodes(); i++)
+	{
+		aggregation_matrix[i] = new double[grid.get_amount_nodes()];
+		for (int j = 0; j < grid.get_amount_nodes(); j++)
+		{
+			aggregation_matrix[i][j] = 0.0;
+		}
+	}
+
+	for (int i = 0; i < grid.get_amount_elements(); i++)
+	{
+		for (int l = 0; l < 4; l++)
+			for (int k = 0; k < 4; k++)
+			{
+				aggregation_matrix[grid.get_element(i).get_id_parameter(l) - 1][grid.get_element(i).get_id_parameter(k) - 1] += grid.get_C_matrix_at(i, l, k);
+			}
+	}
+
+	std::cout << "C matrix\n";
+
+	for (int i = 0; i < grid.get_amount_nodes(); i++)
+	{
+		for (int j = 0; j < grid.get_amount_nodes(); j++)
+		{
+			std::cout << aggregation_matrix[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+
+	return aggregation_matrix;
+}
+
+bool GaussElimination(int n, double* X, double** H, double* P)
+{
+	//n - liczba element√≥w wektora P oraz jednego wymiaru macierzy H
+	//X - tablica zawierajaca wynik operacji
+	//eps - dokladnosc obliczen
+
+	const double eps = 1e-12;
+
+	//Tworzenie tablicy n x n + 1 na kt√≥rej wykonywane beda operacje
+	double** N = new double* [n];
+	for (int i = 0; i < n; i++)
+	{
+		N[i] = new double[n + 1];
+		for (int j = 0; j < n; j++)
+		{
+			N[i][j] = H[i][j];
+		}
+		N[i][n] = P[i];
+	}
+
+	//for (int i = 0; i < n; i++)
+	//{
+	//	for (int j = 0; j < n + 1; j++)
+	//	{
+	//		std::cout << N[i][j] << " ";
+	//	}
+	//	std::cout << std::endl;
+	//}
+
+	//Wlasciwa eliminacja Gaussa
+	//for (int i = 0; i < n; i++)
+	//{
+	//	for (int j = i; j < n + 1; j++)
+	//	{
+	//		if (fabs(N[i][i]) < eps)
+	//			return false;		//jesli warunek spelniony na przekatnej jest 0 czyli brak rozwiazania
+	//		double divisor = -N[j][i] / N[i][i];
+	//		for (int k = i + 1; k <= n + 1; k++)
+	//		{
+	//			N[j][k] += divisor * N[i][k];
+	//		}
+	//	}
+	//}
+
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = i + 1; j < n; j++)
+		{
+			if (fabs(N[i][i]) < eps) return false;
+			double m = -N[j][i] / N[i][i];
+			for (int k = i + 1; k <= n; k++)
+				N[j][k] += m * N[i][k];
+		}
+	}
+
+	if (X == nullptr) 
+	{
+		X = new double[n];
+	}
+
+	for (int i = n - 1; i >= 0; i--)
+	{
+		double s = N[i][n];
+		for (int j = n - 1; j >= i + 1; j--)
+			s -= N[i][j] * X[j];
+		if (fabs(N[i][i]) < eps) return false;
+		X[i] = s / N[i][i];
+	}
+	
+	std::cout << "Wynik dzialania" << std::endl;
+	for (int i = 0; i < n; i++)
+		std::cout << X[i] << std::endl;
+	
+	return true;
+
+	/*
+	for (int i = n - 1; i >= 0; i--)
+	{
+		double s = N[i][n];
+		for (int j = n - 1; j >= i + 1; j--)
+		{
+			s -= N[i][j] * X[j];
+		}
+		if (fabs(N[i][i]) < eps) 
+			return false;
+		X[i] = s / N[i][i];
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		delete[] N[i];
+	}
+	delete[] N;
+	return true;*/
+}
+
+double* Gauss_elimination(double** AB, int N) {
+	const double accuracy = 1e-15;
+	double* result = new double[N];
+	int* vector = new int[N + 1];
+
+	for (int i = 0; i < N + 1; i++)
+		vector[i] = i;
+
+	for (int i = 0; i < N - 1; i++) {
+		bool hasChanged = false;
+		int largest = i;
+
+		for (int j = i + 1; j < N; j++)
+			if (fabs(AB[i][vector[largest]]) < fabs(AB[i][vector[j]])) {
+				hasChanged = true;
+				largest = j;
+			}
+
+		if (hasChanged) {
+			int pom = vector[i];
+			vector[i] = vector[largest];
+			vector[largest] = pom;
+		}
+
+		for (int j = i + 1; j < N; j++) {
+			if (fabs(AB[i][vector[i]]) < accuracy)
+				return NULL;
+
+			double divisor = AB[j][vector[i]] / AB[i][vector[i]];
+
+			for (int k = i + 1; k < N + 1; k++)
+				AB[j][vector[k]] -= (AB[i][vector[k]] * divisor);
+		}
+	}
+
+	for (int i = N - 1; i >= 0; i--) {
+		if (fabs(AB[i][vector[i]]) < accuracy)
+			return NULL;
+
+		for (int j = N - 1; j > i; j--)
+			AB[i][N] -= AB[i][vector[j]] * result[vector[j]];
+
+		result[vector[i]] = AB[i][N] / AB[i][vector[i]];
+	}
+
+	return result;
+}
+
+/**
+ * Algorytm eliminacji Gauss'a do rozwi¬πzywania uk¬≥ad√≥w liniowych.
+ *
+ * @param A - macierz niewiadomych
+ * @param B - wektor rozwi¬πza√±
+ * @param N - liczba uk¬≥ad√≥w r√≥wna√±
+ */
+double* Gauss_elimination(double** A, double* B, int n) {
+	//double** temp = merge(A, B, N);
+	//return Gauss_elimination(temp, N);
+
+	double** temp = new double* [n];
+	for (int i = 0; i < n; i++)
+	{
+		temp[i] = new double[n + 1];
+		for (int j = 0; j < n; j++)
+		{
+			temp[i][j] = A[i][j];
+		}
+		temp[i][n] = B[i];
+	}
+
+	return Gauss_elimination(temp, n);
+}
+
+double** sum_matrix(double** matrix1, double** matrix2, int size)
+{
+	double** temp = new double* [size];
+	for (int i = 0; i < size; i++)
+	{
+		temp[i] = new double[size];
+	}
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+		{
+			temp[i][j] = matrix1[i][j] + matrix2[i][j];
+		}
+	return temp;
+}
+
+double* multiplication_matrix_by_vector(double** matrix1, double* vector1, int size)
+{
+	double* temp = new double[size];
+	for (int i = 0; i < size; i++)
+		temp[i] = 0.0;
+
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+		{
+			temp[i] += matrix1[i][j] * vector1[j];
+
+		}
+	return temp;
+}
+
+double** devide_matrix_by_number(double** matrix1, double number1, int size)
+{
+	double** temp = new double* [size];
+	for (int i = 0; i < size; i++)
+	{
+		temp[i] = new double[size];
+	}
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+		{
+			temp[i][j] = matrix1[i][j] / number1;
+		}
+	return temp;
+}
+
+double* sum_vector(double* vector1, double* vector2, int size)
+{
+	double* temp = new double[size];
+
+	for (int i = 0; i < size; i++)
+		temp[i] = vector1[i] + vector2[i];
+	return temp;
+}
+
+void print_temperature(double** H, double** C, double* P, double* t_start, int time, int step, int n)
+{
+	//std::cout << "Step 1\n";
+	//for (int i = 0; i < n; i++)
+	//	std::cout << t_start[i] << " ";
+	//std::cout << std::endl;
+	std::cout << "Time[s]\tMinTemp[s]\tMaxTemp[s]\n";
+	for (int i = 0; i < time/step; i++)
+	{
+		double* temperature = calculate_temperature(H, C, P, t_start, step, n);
+		delete[] t_start;
+		/*std::cout << "Step " << i + 1 << "\n";
+		for (int i = 0; i < n; i++)
+			std::cout << temperature[i] << " ";*/
+		/*std::cout << std::endl;*/
+		double min = min_temperature(temperature, n);
+		double max = max_temperature(temperature, n);
+		std::cout << (time / (time/step)) * (i + 1) << "\t" << min << "\t\t" << max << "\n";
+		t_start = temperature;
+	}
+}
+
+double* calculate_temperature(double** H, double** C, double* P, double* t_start, int step, int n)
+{
+	double** newC = devide_matrix_by_number(C, step, n);
+	double** newMatrixHC = sum_matrix(H, newC, n);
+	for (int i = 0; i < n; i++)
+		delete[] newC[i];
+	delete[] newC;
+
+	//for (int i = 0; i < n; i++)
+	//{
+	//	for (int j = 0; j < n; j++)
+	//	{
+	//		std::cout << newMatrixHC[i][j] << " ";
+	//	}
+	//	std::cout << std::endl;
+	//}
+	//std::cout << std::endl;
+
+	newC = devide_matrix_by_number(C, step, n);
+	double* newVector = multiplication_matrix_by_vector(newC, t_start, n);
+	for (int i = 0; i < n; i++)
+		delete[] newC[i];
+	delete[] newC;
+
+	//for (int i = 0; i < n; i++)
+	//{
+	//	std::cout << P[i] << " ";
+	//}
+	//std::cout << std::endl;
+
+	double* newVector2 = sum_vector(newVector, P, n);
+
+	//for (int i = 0; i < n; i++)
+	//{
+	//	std::cout << newVector2[i] << " ";
+	//}
+	//std::cout << std::endl;
+
+	double* new_temperature = Gauss_elimination(newMatrixHC, newVector2, n);
+
+	for (int i = 0; i < n; i++)
+		delete[] newMatrixHC[i];
+	delete[] newMatrixHC;
+
+	delete[] newVector;
+	delete[] newVector2;
+
+	return new_temperature;
+}
+
+double max_temperature(double* temperature, int n)
+{
+	double max = temperature[0];
+
+	for (int i = 1; i < n; i++)
+	{
+		if (max < temperature[i])
+		{
+			max = temperature[i];
+		}
+	}
+
+	return max;
+}
+
+double min_temperature(double* temperature, int n)
+{
+	double min = temperature[0];
+
+	for (int i = 1; i < n; i++)
+	{
+		if (min > temperature[i])
+		{
+			min = temperature[i];
+		}
+	}
+
+	return min;
 }

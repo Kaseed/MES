@@ -195,11 +195,40 @@ void Element::show_H_matrix()
 	std::cout << std::endl;
 }
 
+void Element::show_C_matrix()
+{
+	for (int l = 0; l < 4; l++)
+	{
+		for (int m = 0; m < 4; m++)
+			std::cout << C[l][m] << " ";
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+}
+
 void Element::set_Hbc_matrix(double H1[4][4])
 {
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 		{
 			this->Hbc[i][j] = H1[i][j];
+		}
+}
+
+void Element::set_C_matrix(double C[4][4])
+{
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+		{
+			this->C[i][j] = C[i][j];
+		}
+}
+
+void Element::add_boundary_condition()
+{
+	for(int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+		{
+			H[i][j] += Hbc[i][j];
 		}
 }

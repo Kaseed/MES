@@ -81,6 +81,14 @@ Element4_2D::Element4_2D(int amountOfNodes)
 		sideNorth[i][3] = 0.25 * (1.0 - points[i]) * (1.0 + etaNorth);
 	}
 
+	for (int i = 0; i < 4; i++)
+	{
+		N[i][0] = 0.25 * (1.0 - points2[i][0]) * (1.0 - points2[i][1]);
+		N[i][1] = 0.25 * (1.0 + points2[i][0]) * (1.0 - points2[i][1]);
+		N[i][2] = 0.25 * (1.0 + points2[i][0]) * (1.0 + points2[i][1]);
+		N[i][3] = 0.25 * (1.0 - points2[i][0]) * (1.0 + points2[i][1]);
+	}
+
 }
 
 Element4_2D::Element4_2D(Element4_2D& element)
@@ -100,6 +108,7 @@ Element4_2D::Element4_2D(Element4_2D& element)
 		{
 			eta[i][j] = element.eta[i][j];
 			ksi[i][j] = element.ksi[i][j];
+			N[i][j] = element.N[i][j];
 		}
 	}
 

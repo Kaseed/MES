@@ -82,4 +82,13 @@ void test_grid_P_matrix(Grid grid, double* P_matrix)
 	std::cout << std::endl;
 }
 
+void test_grid_C_matrix(Grid grid)
+{
+	for (int i = 0; i < grid.get_amount_elements(); i++)
+	{
+		std::cout << "Element " << i + 1 << std::endl;
+		grid.get_C_matrix(i);
+	}
+}
+
 
