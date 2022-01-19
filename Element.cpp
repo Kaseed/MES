@@ -14,6 +14,7 @@ Element::Element()
 		{
 			H[i][j] = 0;
 			Hbc[i][j] = 0;
+			C[i][j] = 0;
 		}
 	}
 }
@@ -32,6 +33,7 @@ Element::Element(Element& element)
 		{
 			this->H[i][j] = element.H[i][j];
 			Hbc[i][j] = element.Hbc[i][j];
+			C[i][j] = element.C[i][j];
 		}
 	}
 }
@@ -51,6 +53,7 @@ Element::Element(int* array)
 		{
 			H[i][j] = 0;
 			Hbc[i][j] = 0;
+			C[i][j] = 0;
 		}
 	}
 }
@@ -69,6 +72,7 @@ Element::Element(int id1, int id2, int id3, int id4)
 		{
 			H[i][j] = 0;
 			Hbc[i][j] = 0;
+			C[i][j] = 0;
 		}
 	}
 }
@@ -87,6 +91,7 @@ Element::Element(int* array, double H1[4][4])
 		{
 			H[i][j] = H1[i][j];
 			Hbc[i][j] = 0;
+			C[i][j] = 0;
 		}
 	}
 }
@@ -105,6 +110,7 @@ Element::Element(int id1, int id2, int id3, int id4, double H1[4][4])
 		{
 			H[i][j] = H1[i][j];
 			Hbc[i][j] = 0;
+			C[i][j] = 0;
 		}
 	}
 }
@@ -123,6 +129,7 @@ void Element::copy_element(Element& element)
 		{
 			this->H[i][j] = element.H[i][j];
 			this->Hbc[i][j] = element.Hbc[i][j];
+			this->C[i][j] = element.C[i][j];
 		}
 	}
 }
