@@ -18,4 +18,6 @@ public:
 	Element4_2D(int amountOfNodes);
 
 	Element4_2D(Element4_2D& element);
+
+	~Element4_2D();
 };

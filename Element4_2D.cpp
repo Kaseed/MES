@@ -296,3 +296,30 @@ Element4_2D::Element4_2D(Element4_2D& element)
 		}
 	}
 }
+
+Element4_2D::~Element4_2D()
+{
+	for (int i = 0; i < schemat * schemat; i++)
+	{
+		delete[] eta[i];
+		delete[] ksi[i];
+		delete[] N[i];
+	}
+
+	for (int i = 0; i < schemat; i++)
+	{
+		delete[] sideEast[i];
+		delete[] sideNorth[i];
+		delete[] sideSouth[i];
+		delete[] sideWest[i];
+	}
+
+	delete[] weight;
+	delete[] eta;
+	delete[] ksi;
+	delete[] N;
+	delete[] sideEast;
+	delete[] sideNorth;
+	delete[] sideSouth;
+	delete[] sideWest;
+}
