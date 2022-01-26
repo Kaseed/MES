@@ -12,6 +12,28 @@ int main() {
 
 	Element4_2D element(2);
 
+	Element4_2D element3ptk(3);
+
+	/*for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			cout << element.sideEast[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			cout << element.sideWest[i][j] << " ";
+		}
+		cout << endl;
+	}*/
+
 	//testElement4_2D(element);
 
 	//Grid grid(0.5, 0.1, 5, 4);
@@ -30,19 +52,21 @@ int main() {
 
 	//aggregation(grid);
 
+	
+
 	Grid grid1(0.1, 0.1, 4, 4);
 
-	solve_H_matrix(grid1, element);
+	solve_H_matrix(grid1, element3ptk);
 
-	add_boundary_condition(grid1, element);
+	add_boundary_condition(grid1, element3ptk);
 
-	//test_grid_H_matrix(grid1);
+	test_grid_H_matrix(grid1);
 
 	aggregation_H(grid1);
 
 	double* P = aggregation_P(grid1);
 
-	test_grid_P_matrix(grid1, P);
+	//test_grid_P_matrix(grid1, P);
 
 	double* t = new double[grid1.get_amount_nodes()];
 
@@ -64,7 +88,6 @@ int main() {
 
 	solve_C_matrix(grid1, element);
 
-	//test_grid_C_matrix(grid1);
 
 	double** C = aggregation_C(grid1);
 
@@ -78,6 +101,9 @@ int main() {
 	}
 
 	print_temperature(H, C, P, t, 500, 50, grid1.get_amount_nodes());
+
+	
+	
 
 	//EliminujX(grid1.get_amount_elements(), t, H, P);
 

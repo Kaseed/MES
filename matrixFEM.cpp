@@ -3,7 +3,7 @@
 #ifndef LAB_NO_H
 #define LAB_NO_H
 
-#define DEBUG 1
+#define DEBUG 0
 
 #endif
 
@@ -58,7 +58,7 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 #endif
 
 		//Przechodzenie po każdym wierzchołku
-		for (int j = 0; j < 4; j++)
+		for (int j = 0; j < element.schemat * element.schemat; j++) //Dodac więcej punktów
 		{
 #if DEBUG==1
 			std::cout << "Point " << j + 1 << std::endl;
@@ -70,52 +70,95 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 			jakobian(i, j, I, Iinv, element, grid);
 
 #if DEBUG==1
-			for (int l = 0; l < 2; l++)
+			/*for (int l = 0; l < 2; l++)
 			{
 				for (int m = 0; m < 2; m++)
 					std::cout << I[l][m] << " ";
 				std::cout << std::endl;
 			}
-			std::cout << std::endl;
+			std::cout << std::endl;*/
 #endif
-			double dNdx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-			double dNdy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-
-			//Liczenie macierzy powierzchni po punktach całkowania
-			for (int l = 0; l < 4; l++)
-				for (int m = 0; m < 4; m++)
-				{
-					dNdx[l][m] = Iinv[0][0] * element.ksi[l][m] + Iinv[0][1] * element.eta[l][m];
-					dNdy[l][m] = Iinv[1][0] * element.ksi[l][m] + Iinv[1][1] * element.eta[l][m];
-				}
-
-			double Hx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-			double Hy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-			double H1[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-
-			for (int k = 0; k < 4; k++)
+			if(element.schemat == 2)
 			{
-				for (int m = 0; m < 4; m++)
+				double dNdx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double dNdy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+
+				//Liczenie macierzy powierzchni po punktach całkowania
+				for (int l = 0; l < 4; l++)
+					for (int m = 0; m < 4; m++)
+					{
+						dNdx[l][m] = Iinv[0][0] * element.ksi[l][m] + Iinv[0][1] * element.eta[l][m];
+						dNdy[l][m] = Iinv[1][0] * element.ksi[l][m] + Iinv[1][1] * element.eta[l][m];
+					}
+
+				double Hx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double Hy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double H1[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+
+				for (int k = 0; k < 4; k++)
 				{
-					Hx[k][m] = dNdx[j][k] * dNdx[j][m];
-					Hy[k][m] = dNdy[j][k] * dNdy[j][m];
-					double detI = I[0][0] * I[1][1] - I[1][0] * I[0][1];
+					for (int m = 0; m < 4; m++)
+					{
+						Hx[k][m] = dNdx[j][k] * dNdx[j][m];
+						Hy[k][m] = dNdy[j][k] * dNdy[j][m];
+						double detI = I[0][0] * I[1][1] - I[1][0] * I[0][1];
 
-					H1[k][m] = countivity * (Hx[k][m] + Hy[k][m]) * detI;
+						H1[k][m] = countivity * (Hx[k][m] + Hy[k][m]) * detI;
 
-					H[k][m] += H1[k][m];
-#if DEBUG==1
-					std::cout << H1[k][m] << " ";
-#endif
+						H[k][m] += H1[k][m];
+	#if DEBUG==1
+						std::cout << H1[k][m] << " ";
+	#endif
+					}
+	#if DEBUG==1
+					std::cout << std::endl;
+	#endif
+
 				}
-#if DEBUG==1
+	#if DEBUG==1
 				std::cout << std::endl;
-#endif
 
-			}
-#if DEBUG==1
-			std::cout << std::endl;
 #endif
+			}
+			else if (element.schemat == 3)
+			{
+				double dNdx[9][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double dNdy[9][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+			
+				for (int l = 0; l < 9; l++)
+					for (int m = 0; m < 4; m++)
+					{
+						dNdx[l][m] = Iinv[0][0] * element.ksi[l][m] + Iinv[0][1] * element.eta[l][m];
+						dNdy[l][m] = Iinv[1][0] * element.ksi[l][m] + Iinv[1][1] * element.eta[l][m];
+					}
+
+				double Hx[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double Hy[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+				double H1[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+
+				for (int k = 0; k < 4; k++)
+				{
+					for (int m = 0; m < 4; m++)
+					{
+						Hx[k][m] = dNdx[j][k] * dNdx[j][m];
+						Hy[k][m] = dNdy[j][k] * dNdy[j][m];
+						double detI = I[0][0] * I[1][1] - I[1][0] * I[0][1];
+
+						H1[k][m] = countivity * (Hx[k][m] + Hy[k][m]) * detI * element.weight[j/3] * element.weight[j%3];
+
+						H[k][m] += H1[k][m];
+
+						//std::cout << H1[k][m] << " ";
+
+					}
+
+					//std::cout << std::endl;
+
+
+				}
+				//std::cout << std::endl;
+			
+			}
 
 
 		}
@@ -154,11 +197,23 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				{
 					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
 					//std::cout << "det\n" << det;
-					P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
-					for (int l = 0; l < 4; l++)
+					if(uniwersalElement.schemat == 2)
+					{ 
+						
+						for (int l = 0; l < 4; l++)
+						{
+							P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
+							Hbc[k][l] =300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
+						}
+					}
+					else if (uniwersalElement.schemat == 3) 
 					{
-
-						Hbc[k][l] =300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
+						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideSouth[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideSouth[2][k] * 1200) * det;
+						
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideSouth[2][k] * uniwersalElement.sideSouth[2][l] * uniwersalElement.weight[2]) * det;
+						}
 					}
 				}
 				grid.add_boundary_Condition(i, Hbc, P);
@@ -178,10 +233,22 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
-					P[k] += 300 * (uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.sideWest[1][k] * 1200) * det;
-					for (int l = 0; l < 4; l++)
+					
+					if (uniwersalElement.schemat == 2)
 					{
-						Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l]) * det;
+						P[k] += 300 * (uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.sideWest[1][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l]) * det;
+						}
+					}
+					else if (uniwersalElement.schemat == 3)
+					{
+						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideWest[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideWest[2][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideWest[2][k] * uniwersalElement.sideWest[2][l] * uniwersalElement.weight[2]) * det;
+						}
 					}
 				}
 
@@ -205,10 +272,21 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
-					P[k] += 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
-					for (int l = 0; l < 4; l++)
+					if (uniwersalElement.schemat == 2)
 					{
-						Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l]) * det;
+						P[k] += 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l]) * det;
+						}
+					} 
+					else if (uniwersalElement.schemat == 3)
+					{
+						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideEast[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideEast[2][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideEast[2][k] * uniwersalElement.sideEast[2][l] * uniwersalElement.weight[2]) * det;
+						}
 					}
 				}
 				grid.add_boundary_Condition(i, Hbc, P);
@@ -229,10 +307,22 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
-					P[k] += 300 * (uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.sideNorth[1][k] * 1200) * det;
-					for (int l = 0; l < 4; l++)
+					
+					if (uniwersalElement.schemat == 2)
 					{
-						Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l]) * det;
+						P[k] += 300 * (uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.sideNorth[1][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l]) * det;
+						}
+					}
+					else if (uniwersalElement.schemat == 3)
+					{
+						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideNorth[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideNorth[2][k] * 1200) * det;
+						for (int l = 0; l < 4; l++)
+						{
+							Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideNorth[2][k] * uniwersalElement.sideNorth[2][l] * uniwersalElement.weight[2]) * det;
+						}
 					}
 				}
 

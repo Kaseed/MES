@@ -2,15 +2,18 @@
 class Element4_2D
 {
 public:
+	int schemat;
+
 	double** eta;
 	double** ksi;
+	double* weight;
 
-	double sideWest[2][4];
-	double sideNorth[2][4];
-	double sideEast[2][4];
-	double sideSouth[2][4];
+	double** sideWest;
+	double** sideNorth;
+	double** sideEast;
+	double** sideSouth;
 
-	double N[4][4];
+	double** N;
 
 	Element4_2D(int amountOfNodes);
 
