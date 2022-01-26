@@ -345,7 +345,7 @@ void solve_C_matrix(Grid& grid, Element4_2D element)
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		double C[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
-		for (int j = 0; j < 4; j++)
+		for (int j = 0; j < element.schemat * element.schemat; j++) //schemat całkowania
 		{
 			double I[2][2] = { {0,0},{0,0} };
 			double Iinv[2][2] = { {0,0},{0,0} };
@@ -357,7 +357,15 @@ void solve_C_matrix(Grid& grid, Element4_2D element)
 			{
 				for (int m = 0; m < 4; m++)
 				{
-					double data = c * ro * (element.N[j][k] * element.N[j][m]) * detI;
+					double data;
+					if (element.schemat == 2)
+					{
+						data = c * ro * (element.N[j][k] * element.N[j][m]) * detI;
+					}
+					else if (element.schemat == 3)
+					{
+						data = c * ro * (element.N[j][k] * element.N[j][m]) * detI * element.weight[j / 3] * element.weight[j % 3];
+					}
 					C[k][m] += data;
 				}
 			}

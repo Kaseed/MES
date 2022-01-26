@@ -86,7 +86,7 @@ int main() {
 		cout << endl;
 	}
 
-	solve_C_matrix(grid1, element);
+	solve_C_matrix(grid1, element3ptk);
 
 
 	double** C = aggregation_C(grid1);
