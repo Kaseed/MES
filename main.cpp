@@ -56,9 +56,9 @@ int main() {
 
 	Grid grid1(0.1, 0.1, 4, 4);
 
-	solve_H_matrix(grid1, element3ptk);
+	solve_H_matrix(grid1, element);
 
-	add_boundary_condition(grid1, element3ptk);
+	add_boundary_condition(grid1, element);
 
 	test_grid_H_matrix(grid1);
 
@@ -86,7 +86,7 @@ int main() {
 		cout << endl;
 	}
 
-	solve_C_matrix(grid1, element3ptk);
+	solve_C_matrix(grid1, element);
 
 
 	double** C = aggregation_C(grid1);

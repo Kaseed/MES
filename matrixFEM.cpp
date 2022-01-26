@@ -196,13 +196,11 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				for (int k = 0; k < 4; k++)
 				{
 					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
-					//std::cout << "det\n" << det;
 					if(uniwersalElement.schemat == 2)
-					{ 
-						
+					{
+						P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
 							Hbc[k][l] =300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
 						}
 					}
