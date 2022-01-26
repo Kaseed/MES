@@ -7,14 +7,15 @@
 #include "Grid.h"
 #include "Element.h"
 #include "Node.h"
+#include "Data.h"
 
 void jakobian(int i, int j, double I[2][2], double Iinv[2][2], Element4_2D element, Grid& grid);
 
-void solve_H_matrix(Grid& grid, Element4_2D element);
+void solve_H_matrix(Grid& grid, Element4_2D element, Data data);
 
-void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement);
+void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data);
 
-void solve_C_matrix(Grid& grid, Element4_2D element);
+void solve_C_matrix(Grid& grid, Element4_2D element, Data data);
 
 double** aggregation_H(Grid& grid);
 

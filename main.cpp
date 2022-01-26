@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "grid.h"
-//#include "gaussIntegral.h"
 #include "Element4_2D.h"
 #include "Tests.h"
 #include "matrixFEM.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -51,14 +51,23 @@ int main() {
 	//test_grid_H_matrix(grid);
 
 	//aggregation(grid);
+	Data data;
 
+	data.SimulationTime = 500;
+	data.SimulationStepTime = 50;
+	data.Conductivity = 25;
+	data.Alfa = 300;
+	data.Tot = 1200;
+	data.InitialTemp = 100;
+	data.Density = 7800;
+	data.SpecificHeat = 700;
 	
 
 	Grid grid1(0.1, 0.1, 4, 4);
 
-	solve_H_matrix(grid1, element);
+	solve_H_matrix(grid1, element, data);
 
-	add_boundary_condition(grid1, element);
+	add_boundary_condition(grid1, element, data);
 
 	test_grid_H_matrix(grid1);
 
@@ -86,7 +95,7 @@ int main() {
 		cout << endl;
 	}
 
-	solve_C_matrix(grid1, element);
+	solve_C_matrix(grid1, element, data);
 
 
 	double** C = aggregation_C(grid1);

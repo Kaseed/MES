@@ -53,10 +53,10 @@ void jakobian(int i, int j, double I[2][2], double Iinv[2][2], Element4_2D eleme
 	Iinv[1][0] = (1.0 / detI) * -I[1][0];
 }
 
-void solve_H_matrix(Grid& grid, Element4_2D element)
+void solve_H_matrix(Grid& grid, Element4_2D element, Data data)
 {
 	// Współczynnik przewodzenia
-	double countivity = 25.0;
+	double countivity = data.Conductivity;
 
 
 	//Przechodzenie po każdym elemencie
@@ -186,12 +186,15 @@ void solve_H_matrix(Grid& grid, Element4_2D element)
 	}
 }
 
-void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
+void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 {
 	//TO DO
 	//Zmienić detJ z oblicznia z długości na obliczanie ze współrzędnych punktów
 	//Zamienić 300 na alfa
 	//Zamienić 1200 na temperature
+
+	double alfa = data.Alfa;
+	double endTemperature = data.Tot;
 
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
@@ -210,19 +213,19 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id1() - 1).get_x(), grid.get_node(grid.get_element(i).get_id1() - 1).get_y(), grid.get_node(grid.get_element(i).get_id2() - 1).get_x(), grid.get_node(grid.get_element(i).get_id2() - 1).get_y()) / 2;
 					if(uniwersalElement.schemat == 2)
 					{
-						P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.sideSouth[0][k] * endTemperature + uniwersalElement.sideSouth[1][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] =300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l]) * det;
 						}
 					}
 					else if (uniwersalElement.schemat == 3) 
 					{
-						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideSouth[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideSouth[2][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.weight[0] * uniwersalElement.sideSouth[0][k] * endTemperature + uniwersalElement.weight[1] * uniwersalElement.sideSouth[1][k] * endTemperature + uniwersalElement.weight[2] * uniwersalElement.sideSouth[2][k] * endTemperature) * det;
 						
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideSouth[2][k] * uniwersalElement.sideSouth[2][l] * uniwersalElement.weight[2]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideSouth[0][k] * uniwersalElement.sideSouth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideSouth[1][k] * uniwersalElement.sideSouth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideSouth[2][k] * uniwersalElement.sideSouth[2][l] * uniwersalElement.weight[2]) * det;
 						}
 					}
 				}
@@ -248,18 +251,18 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 					
 					if (uniwersalElement.schemat == 2)
 					{
-						P[k] += 300 * (uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.sideWest[1][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.sideWest[0][k] * endTemperature + uniwersalElement.sideWest[1][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l]) * det;
 						}
 					}
 					else if (uniwersalElement.schemat == 3)
 					{
-						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideWest[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideWest[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideWest[2][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.weight[0] * uniwersalElement.sideWest[0][k] * endTemperature + uniwersalElement.weight[1] * uniwersalElement.sideWest[1][k] * endTemperature + uniwersalElement.weight[2] * uniwersalElement.sideWest[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideWest[2][k] * uniwersalElement.sideWest[2][l] * uniwersalElement.weight[2]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideWest[0][k] * uniwersalElement.sideWest[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideWest[1][k] * uniwersalElement.sideWest[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideWest[2][k] * uniwersalElement.sideWest[2][l] * uniwersalElement.weight[2]) * det;
 						}
 					}
 				}
@@ -288,18 +291,18 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id3() - 1).get_x(), grid.get_node(grid.get_element(i).get_id3() - 1).get_y(), grid.get_node(grid.get_element(i).get_id2() - 1).get_x(), grid.get_node(grid.get_element(i).get_id2() - 1).get_y()) / 2;
 					if (uniwersalElement.schemat == 2)
 					{
-						P[k] += 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.sideEast[0][k] * endTemperature + uniwersalElement.sideEast[1][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l]) * det;
 						}
 					} 
 					else if (uniwersalElement.schemat == 3)
 					{
-						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideEast[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideEast[2][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.weight[0] * uniwersalElement.sideEast[0][k] * endTemperature + uniwersalElement.weight[1] * uniwersalElement.sideEast[1][k] * endTemperature + uniwersalElement.weight[2] * uniwersalElement.sideEast[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideEast[2][k] * uniwersalElement.sideEast[2][l] * uniwersalElement.weight[2]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideEast[0][k] * uniwersalElement.sideEast[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideEast[1][k] * uniwersalElement.sideEast[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideEast[2][k] * uniwersalElement.sideEast[2][l] * uniwersalElement.weight[2]) * det;
 						}
 					}
 				}
@@ -326,18 +329,18 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 					
 					if (uniwersalElement.schemat == 2)
 					{
-						P[k] += 300 * (uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.sideNorth[1][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.sideNorth[0][k] * endTemperature + uniwersalElement.sideNorth[1][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l]) * det;
 						}
 					}
 					else if (uniwersalElement.schemat == 3)
 					{
-						P[k] += 300 * (uniwersalElement.weight[0] * uniwersalElement.sideNorth[0][k] * 1200 + uniwersalElement.weight[1] * uniwersalElement.sideNorth[1][k] * 1200 + uniwersalElement.weight[2] * uniwersalElement.sideNorth[2][k] * 1200) * det;
+						P[k] += alfa * (uniwersalElement.weight[0] * uniwersalElement.sideNorth[0][k] * endTemperature + uniwersalElement.weight[1] * uniwersalElement.sideNorth[1][k] * endTemperature + uniwersalElement.weight[2] * uniwersalElement.sideNorth[2][k] * endTemperature) * det;
 						for (int l = 0; l < 4; l++)
 						{
-							Hbc[k][l] = 300 * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideNorth[2][k] * uniwersalElement.sideNorth[2][l] * uniwersalElement.weight[2]) * det;
+							Hbc[k][l] = alfa * (uniwersalElement.sideNorth[0][k] * uniwersalElement.sideNorth[0][l] * uniwersalElement.weight[0] + uniwersalElement.sideNorth[1][k] * uniwersalElement.sideNorth[1][l] * uniwersalElement.weight[1] + uniwersalElement.sideNorth[2][k] * uniwersalElement.sideNorth[2][l] * uniwersalElement.weight[2]) * det;
 						}
 					}
 				}
@@ -355,9 +358,10 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 	}
 }
 
-void solve_C_matrix(Grid& grid, Element4_2D element)
+void solve_C_matrix(Grid& grid, Element4_2D element, Data data)
 {
-	double c = 700.0, ro = 7800.0;
+	double c = data.SpecificHeat;
+	double ro = data.Density;
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
 		double C[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
@@ -373,7 +377,7 @@ void solve_C_matrix(Grid& grid, Element4_2D element)
 			{
 				for (int m = 0; m < 4; m++)
 				{
-					double data;
+					double data = 0;
 					if (element.schemat == 2)
 					{
 						data = c * ro * (element.N[j][k] * element.N[j][m]) * detI;

@@ -65,8 +65,8 @@ Grid::Grid(Grid& grid)
 
 Grid::~Grid()
 {
-		delete[] nodes;
-		delete[] elements;
+	delete[] nodes;
+	delete[] elements;
 }
 
 void Grid::show_nodes()
