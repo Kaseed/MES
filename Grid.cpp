@@ -63,6 +63,12 @@ Grid::Grid(Grid& grid)
 	}
 }
 
+Grid::~Grid()
+{
+		delete[] nodes;
+		delete[] elements;
+}
+
 void Grid::show_nodes()
 {
 	for (int i = 0; i < nNodes; i++)

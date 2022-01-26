@@ -24,7 +24,7 @@ public:
 
 	Grid(Grid& grid);
 
-	//~Grid();
+	~Grid();
 
 	void show_nodes();
 
