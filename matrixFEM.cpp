@@ -10,6 +10,16 @@
 
 #include "matrixFEM.h"
 
+double calculate_det_for_1d(double x1, double y1, double x2, double y2)
+{
+	double value = 0;
+	double x = 0, y = 0;
+	x = (x1 - x2) * (x1 - x2);
+	y = (y1 - y2) * (y1 - y2);
+	value = sqrt(x + y);
+	return value;
+}
+
 void jakobian(int i, int j, double I[2][2], double Iinv[2][2], Element4_2D element, Grid& grid)
 {
 	double points[4][2] = { {0,0}, {0,0}, {0, 0}, {0,0} };
@@ -195,7 +205,9 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 
 				for (int k = 0; k < 4; k++)
 				{
-					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
+					//double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
+
+					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id1() - 1).get_x(), grid.get_node(grid.get_element(i).get_id1() - 1).get_y(), grid.get_node(grid.get_element(i).get_id2() - 1).get_x(), grid.get_node(grid.get_element(i).get_id2() - 1).get_y()) / 2;
 					if(uniwersalElement.schemat == 2)
 					{
 						P[k] += 300 * (uniwersalElement.sideSouth[0][k] * 1200 + uniwersalElement.sideSouth[1][k] * 1200) * det;
@@ -230,7 +242,9 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
+					//double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
+
+					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id1() - 1).get_x(), grid.get_node(grid.get_element(i).get_id1() - 1).get_y(), grid.get_node(grid.get_element(i).get_id4() - 1).get_x(), grid.get_node(grid.get_element(i).get_id4() - 1).get_y()) / 2;
 					
 					if (uniwersalElement.schemat == 2)
 					{
@@ -269,7 +283,9 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
+					//double det = (grid.get_height() / (grid.get_n_height() - 1)) / 2;
+
+					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id3() - 1).get_x(), grid.get_node(grid.get_element(i).get_id3() - 1).get_y(), grid.get_node(grid.get_element(i).get_id2() - 1).get_x(), grid.get_node(grid.get_element(i).get_id2() - 1).get_y()) / 2;
 					if (uniwersalElement.schemat == 2)
 					{
 						P[k] += 300 * (uniwersalElement.sideEast[0][k] * 1200 + uniwersalElement.sideEast[1][k] * 1200) * det;
@@ -304,7 +320,9 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement)
 				double P[4] = { 0,0,0,0 };
 				for (int k = 0; k < 4; k++)
 				{
-					double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
+					//double det = (grid.get_width() / (grid.get_n_width() - 1)) / 2;
+
+					double det = calculate_det_for_1d(grid.get_node(grid.get_element(i).get_id3() - 1).get_x(), grid.get_node(grid.get_element(i).get_id3() - 1).get_y(), grid.get_node(grid.get_element(i).get_id4() - 1).get_x(), grid.get_node(grid.get_element(i).get_id4() - 1).get_y()) / 2;
 					
 					if (uniwersalElement.schemat == 2)
 					{
@@ -801,3 +819,6 @@ double min_temperature(double* temperature, int n)
 
 	return min;
 }
+
+
+

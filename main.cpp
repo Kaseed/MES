@@ -102,65 +102,6 @@ int main() {
 
 	print_temperature(H, C, P, t, 500, 50, grid1.get_amount_nodes());
 
-	
-	
-
-	//EliminujX(grid1.get_amount_elements(), t, H, P);
-
-	//std::cout << std::endl;
-
-	//for (int i = 0; i < grid1.get_amount_elements(); i++)
-	//{
-	//	std::cout << t[i];
-	//}
-
-	//std::cout << std::endl;
-
-	/*int n = 4;
-
-	double** N = new double* [n];
-	for (int i = 0; i < n; i++)
-	{
-		N[i] = new double[n + 1];
-	}
-	N[0][0] = 4.;
-	N[0][1] = -2.;
-	N[0][2] = 4.;
-	N[0][3] = -2.;
-
-	N[1][0] = 3.;
-	N[1][1] = 1.;
-	N[1][2] = 4.;
-	N[1][3] = 2.;
-	
-	N[2][0] = 2.;
-	N[2][1] = 4.;
-	N[2][2] = 2.;
-	N[2][3] = 1.;
-	
-	N[3][0] = 2.;
-	N[3][1] = -2.;
-	N[3][2] = 4.;
-	N[3][3] = 2.;
-
-	double T[4] = { 8., 7., 10., 2. };
-
-	double* value = nullptr;
-
-	GaussElimination(4, value, N, T);
-
-	for (int i = 0; i < n; i++)
-	{
-		cout << value << " ";
-	}*/
-
-	//double* X = nullptr;
-
-	//cout << GaussElimination(grid1.get_amount_nodes(), X, H, P);
-
-	//delete[] P;
-
-
 
 	return 0;
 }
