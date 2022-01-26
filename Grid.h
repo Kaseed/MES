@@ -20,6 +20,8 @@ class Grid
 
 public:
 
+	Grid();
+
 	Grid(float h, float w, int nH, int nW);
 
 	Grid(Grid& grid);
@@ -58,6 +60,10 @@ public:
 
 	Element get_element(int number);
 
+	Node* get_orginal_node(int number);
+
+	Element* get_orginal_element(int number);
+
 	void save_H_Matrix(double H[4][4], int element);
 
 	void add_boundary_Condition(int element, double Hbc[4][4], double P[4]);
@@ -65,6 +71,10 @@ public:
 	void sum_boundary_Condition();
 
 	void save_C_matrix(double H[4][4], int element);
+
+	void setnNodes(int n);
+
+	void setnElements(int n);
 
 };
 

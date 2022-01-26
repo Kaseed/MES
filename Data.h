@@ -1,4 +1,13 @@
 #pragma once
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include "Grid.h"
+
+using namespace std;
+
 class Data
 {
 public:
@@ -10,5 +19,9 @@ public:
 	int InitialTemp;
 	int Density;
 	int SpecificHeat;
+
+	Data();
+
+	Data(std::string path, Grid &grid);
 };
 

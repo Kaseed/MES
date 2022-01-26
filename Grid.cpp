@@ -2,6 +2,12 @@
 
 #include <iostream>
 
+Grid::Grid()
+{
+	nodes = nullptr;
+	elements = nullptr;
+}
+
 Grid::Grid(float h, float w, int nH, int nW)
 	:height(h), width(w), nHeight(nH), nWidth(nW)
 {
@@ -159,6 +165,16 @@ Element Grid::get_element(int number)
 	return elements[number];
 }
 
+Node* Grid::get_orginal_node(int number)
+{
+	return &nodes[number];
+}
+
+Element* Grid::get_orginal_element(int number)
+{
+	return &elements[number];
+}
+
 void Grid::save_H_Matrix(double H[4][4], int element)
 {
 	this->elements[element].set_H_matrix(H);
@@ -190,4 +206,24 @@ void Grid::sum_boundary_Condition()
 void Grid::save_C_matrix(double H[4][4], int element)
 {
 	this->elements[element].set_C_matrix(H);
+}
+
+void Grid::setnNodes(int n)
+{
+	nNodes = n;
+	if (nodes != nullptr)
+	{
+		delete[] nodes;
+	}
+	nodes = new Node[nNodes];
+}
+
+void Grid::setnElements(int n)
+{
+	nElements = n;
+	if (elements != nullptr)
+	{
+		delete[] elements;
+	}
+	elements = new Element[nElements];
 }

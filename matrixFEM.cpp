@@ -173,13 +173,13 @@ void solve_H_matrix(Grid& grid, Element4_2D element, Data data)
 
 		}
 
-		for (int l = 0; l < 4; l++)
+		/*for (int l = 0; l < 4; l++)
 		{
 			for (int m = 0; m < 4; m++)
 				std::cout << H[l][m] << " ";
 			std::cout << std::endl;
 		}
-		std::cout << std::endl;
+		std::cout << std::endl;*/
 
 		grid.save_H_Matrix(H, i);
 
@@ -198,7 +198,7 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 
 	for (int i = 0; i < grid.get_amount_elements(); i++)
 	{
-		std::cout << "Element " << i + 1 << std::endl;
+		//std::cout << "Element " << i + 1 << std::endl;
 		if (grid.get_node(grid.get_element(i).get_id1() - 1).get_bc() == 1)
 		{
 			if (grid.get_node(grid.get_element(i).get_id2() - 1).get_bc() == 1)
@@ -230,13 +230,13 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 					}
 				}
 				grid.add_boundary_Condition(i, Hbc, P);
-				for (int z = 0; z < 4; z++)
+				/*for (int z = 0; z < 4; z++)
 				{
 					for (int v = 0; v < 4; v++)
 						std::cout << Hbc[z][v] << " ";
 					std::cout << std::endl;
 				}
-				std::cout << std::endl;
+				std::cout << std::endl;*/
 			}
 
 			if (grid.get_node(grid.get_element(i).get_id4() - 1).get_bc() == 1)
@@ -268,13 +268,13 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 				}
 
 				grid.add_boundary_Condition(i, Hbc, P);
-				for (int z = 0; z < 4; z++)
-				{
-					for (int v = 0; v < 4; v++)
-						std::cout << Hbc[z][v] << " ";
-					std::cout << std::endl;
-				}
-				std::cout << std::endl;
+				//for (int z = 0; z < 4; z++)
+				//{
+				//	for (int v = 0; v < 4; v++)
+				//		std::cout << Hbc[z][v] << " ";
+				//	std::cout << std::endl;
+				//}
+				//std::cout << std::endl;
 			}
 		}
 
@@ -307,13 +307,13 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 					}
 				}
 				grid.add_boundary_Condition(i, Hbc, P);
-				for (int z = 0; z < 4; z++)
-				{
-					for (int v = 0; v < 4; v++)
-						std::cout << Hbc[z][v] << " ";
-					std::cout << std::endl;
-				}
-				std::cout << std::endl;
+				//for (int z = 0; z < 4; z++)
+				//{
+				//	for (int v = 0; v < 4; v++)
+				//		std::cout << Hbc[z][v] << " ";
+				//	std::cout << std::endl;
+				//}
+				//std::cout << std::endl;
 
 			}
 
@@ -346,13 +346,13 @@ void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 				}
 
 				grid.add_boundary_Condition(i, Hbc, P);
-				for (int z = 0; z < 4; z++)
-				{
-					for (int v = 0; v < 4; v++)
-						std::cout << Hbc[z][v] << " ";
-					std::cout << std::endl;
-				}
-				std::cout << std::endl;
+				//for (int z = 0; z < 4; z++)
+				//{
+				//	for (int v = 0; v < 4; v++)
+				//		std::cout << Hbc[z][v] << " ";
+				//	std::cout << std::endl;
+				//}
+				//std::cout << std::endl;
 			}
 		}
 	}
@@ -419,14 +419,14 @@ double** aggregation_H(Grid& grid)
 			}
 	}
 
-	for (int i = 0; i < grid.get_amount_nodes(); i++)
-	{
-		for (int j = 0; j < grid.get_amount_nodes(); j++)
-		{
-			std::cout << aggregation_matrix[i][j] << " ";
-		}
-		std::cout << "\n";
-	}
+	//for (int i = 0; i < grid.get_amount_nodes(); i++)
+	//{
+	//	for (int j = 0; j < grid.get_amount_nodes(); j++)
+	//	{
+	//		std::cout << aggregation_matrix[i][j] << " ";
+	//	}
+	//	std::cout << "\n";
+	//}
 
 	return aggregation_matrix;
 
@@ -482,16 +482,16 @@ double** aggregation_C(Grid& grid)
 			}
 	}
 
-	std::cout << "C matrix\n";
+	//std::cout << "C matrix\n";
 
-	for (int i = 0; i < grid.get_amount_nodes(); i++)
-	{
-		for (int j = 0; j < grid.get_amount_nodes(); j++)
-		{
-			std::cout << aggregation_matrix[i][j] << " ";
-		}
-		std::cout << "\n";
-	}
+	//for (int i = 0; i < grid.get_amount_nodes(); i++)
+	//{
+	//	for (int j = 0; j < grid.get_amount_nodes(); j++)
+	//	{
+	//		std::cout << aggregation_matrix[i][j] << " ";
+	//	}
+	//	std::cout << "\n";
+	//}
 
 	return aggregation_matrix;
 }
