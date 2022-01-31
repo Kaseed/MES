@@ -188,11 +188,6 @@ void solve_H_matrix(Grid& grid, Element4_2D element, Data data)
 
 void add_boundary_condition(Grid& grid, Element4_2D uniwersalElement, Data data)
 {
-	//TO DO
-	//Zmienić detJ z oblicznia z długości na obliczanie ze współrzędnych punktów
-	//Zamienić 300 na alfa
-	//Zamienić 1200 na temperature
-
 	double alfa = data.Alfa;
 	double endTemperature = data.Tot;
 
@@ -662,7 +657,15 @@ double* Gauss_elimination(double** A, double* B, int n) {
 		temp[i][n] = B[i];
 	}
 
-	return Gauss_elimination(temp, n);
+	double* handle = Gauss_elimination(temp, n);
+	for (int i = 0; i < n; i++)
+	{
+		delete[] temp[i];
+	}
+	delete[] temp;
+
+
+	return handle;
 }
 
 double** sum_matrix(double** matrix1, double** matrix2, int size)
@@ -741,6 +744,7 @@ void print_temperature(double** H, double** C, double* P, double* t_start, int t
 		double max = max_temperature(temperature, n);
 		std::cout << (time / (time/step)) * (i + 1) << "\t" << min << "\t\t" << max << "\n";
 		t_start = temperature;
+		temperature = nullptr;
 	}
 }
 
